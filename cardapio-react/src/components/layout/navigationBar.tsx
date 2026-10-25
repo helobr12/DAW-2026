@@ -1,13 +1,24 @@
-export function NavigationBar() {
-    return (
-        <nav>
-            <ul className="container">
-                <li><a href="#" className="active">Todos</a></li>
-                <li><a href="#">Lanches</a></li>
-                <li><a href="#">Porções</a></li>
-                <li><a href="#">Bebidas</a></li>
-                <li><a href="#">Sobremesas</a></li>
-            </ul>
-        </nav>
-    )
+import type { Category } from "../../data/categories";
+
+type NavigationBarProps = {
+  categories: Category[]
+  activeCategory: string
+  onSelectCategory?: (alias: string) => void
+};
+
+export function NavigationBar({ categories, activeCategory, onSelectCategory }: NavigationBarProps) {
+  return (
+    <nav>
+      <ul className="container">
+        {categories.map((category) => (
+          <li>
+            <button type="button" className={category.alias === activeCategory ? "active" : ""}
+              onClick={() => onSelectCategory?.(category.alias)}> 
+              {category.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }
